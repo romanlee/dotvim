@@ -9,24 +9,30 @@ let s:darwin = has('mac')
 
 " VIM-PLUG INSTALLATION {{{
 
-" Using nice plugin manager - https://github.com/junegunn/vim-plug
+" using nice plugin manager - https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
 Plug 'dracula/vim'
-Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'xolox/vim-misc'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'yuttie/comfortable-motion.vim'
+Plug 'yuttie/comfortable-motion.vim'
 if has('nvim')
     "Plug 'roxma/nvim-completion-manager'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
 Plug 'vim-airline/vim-airline'
-Plug 'roxma/nvim-completion-manager'
+
+" tags
 Plug 'ludovicchabant/vim-gutentags'      " much better than vim-easytags
+
+" git
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+Plug 'mileszs/ack.vim'
 
 call plug#end()
 
@@ -34,26 +40,31 @@ call plug#end()
 
 " PLUGIN CONFIG {{{
 
-" NERDCommenter-----------------------------------------------------------------
+" NERDCommenter ----------------------------------------------------------------
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
-" " Use compact syntax for prettified multi-line comments
+" Use compact syntax for prettified multi-line comments
 " let g:NERDCompactSexyComs = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
+" let g:NERDDefaultAlign = 'left'
 
-" Airline
-" --------------------------------------------------------------
+" Airline ----------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 
 "nvim-completion-manager--------------------------------------------------------
 " let g:cm_auto_popup = 1
 
-"Deoplete-----------------------------------------------------------------------
+" Deoplete ---------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
 
-"NERDTree-----------------------------------------------------------------------
+" NERDTree ---------------------------------------------------------------------
 let NERDTreeShowHidden=1
+
+" gitgutter --------------------------------------------------------------------
+set updatetime=100
+
+" comfortable-motion -----------------------------------------------------------
+let g:comfortable_motion_no_default_key_mappings = 1
 
 " }}}
 
@@ -68,16 +79,23 @@ color dracula
 set number
 set hidden
 set history=100
-set hlsearch                   " highlight found words in search
 set backspace=indent,eol,start
 set colorcolumn=80
 set mouse=a
 set clipboard=unnamed
 set cursorline
+set guicursor+=a:blinkon1
+
+" Searching
+set hlsearch        " highlight found words in search
+set ignorecase      " case of normal letter is ignored
+set smartcase       " ignore case when lowercase letters only
+set incsearch       " search as characters are entered
+
+" some color shit
 if $TERM_PROGRAM =~ "iTerm"
   set termguicolors
 endif
-
 hi Pmenu    guifg=#f8f8f2 guibg=#646e96
 hi PmenuSel guifg=#282a36 guibg=#50fa7b
 
@@ -91,6 +109,19 @@ set autoindent      " automatically ident
 " Reomve white space upon save
 autocmd BufWritePre * :%s/\s\+$//e
 
+" using system clipboard on mac
+set clipboard+=unnamedplus
+
+" Python Language Settings -----------------------------------------------------
+au BufRead,BufNewFile *.py
+      \ set tabstop=4       " number of visual spaces per TAB
+      \ set softtabstop=4   " number of spaces in tab when editing
+      \ set shiftwidth=4    " number of spaces to use for indent
+
+" Fortran Language Settings ----------------------------------------------------
+autocmd FileType *.f03
+      \ let fortran_free_source=1 |   " force free source
+      \ let fortran_dialect = "f08"   " use modern fortran for Fortran 03 files
 
 " }}}
 
@@ -102,11 +133,15 @@ let mapleader=','
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
+
 " moving around
 nnoremap <C-h> <Home>
 nnoremap <C-l> <End>
 inoremap <C-h> <Home>
 inoremap <C-l> <End>
+vnoremap <C-h> <Home>
+vnoremap <C-l> <End>
+
 " windows and buffers and stuff
 nnoremap <leader>q  :quit<cr>
 nnoremap <leader>w  :w<cr>
@@ -120,19 +155,26 @@ nnoremap <Esc>      <Nop>
 nnoremap <leader>t :Tags<cr>
 nnoremap <leader>f :Files<cr>
 nnoremap ;         :Buffer<cr>
+nnoremap <leader>a :Ag<cr>
 
 " NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
 " Searching
-nnoremap <space>          /
+nnoremap <space>         /
 nnoremap <leader><space> :nohlsearch<CR>
 
 " Folding
 nnoremap <F9> za
 
 " scrolling through the popup menu with Alt-j/k
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" sourcing vimrc
+map <leader>s :source ~/.vimrc<CR>
+
+xnoremap <Tab> >
+xnoremap <S-Tab> <
 
 " }}}

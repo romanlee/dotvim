@@ -14,10 +14,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'dracula/vim'
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 Plug 'xolox/vim-misc'
-Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
 Plug 'yuttie/comfortable-motion.vim'
 if has('nvim')
     "Plug 'roxma/nvim-completion-manager'
@@ -32,7 +31,11 @@ Plug 'ludovicchabant/vim-gutentags'      " much better than vim-easytags
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
+" searching
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+" Plug 'rking/ag.vim'
 
 call plug#end()
 
@@ -40,19 +43,8 @@ call plug#end()
 
 " PLUGIN CONFIG {{{
 
-" NERDCommenter ----------------------------------------------------------------
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-" let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-" let g:NERDDefaultAlign = 'left'
-
 " Airline ----------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
-
-"nvim-completion-manager--------------------------------------------------------
-" let g:cm_auto_popup = 1
 
 " Deoplete ---------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
@@ -134,7 +126,7 @@ inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
 
-" moving around
+" moving around in text
 nnoremap <C-h> <Home>
 nnoremap <C-l> <End>
 inoremap <C-h> <Home>
@@ -143,12 +135,16 @@ vnoremap <C-h> <Home>
 vnoremap <C-l> <End>
 
 " windows and buffers and stuff
-nnoremap <leader>q  :quit<cr>
+nnoremap <leader>Q  :quit<cr>
+nnoremap <leader>q  :bp\|bd # <cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>wq :wq<cr>
-nnoremap <leader>bd :bd<cr>
+" move between tabs
 nnoremap <S-Tab>    :bp<cr>
 nnoremap <Tab>      :bn<cr>
+" move between split panes
+nnoremap <S-[>      <C-W>h
+nnoremap <S-]>      <C-W>l
 nnoremap <Esc>      <Nop>
 
 " FZF
@@ -165,7 +161,7 @@ nnoremap <space>         /
 nnoremap <leader><space> :nohlsearch<CR>
 
 " Folding
-nnoremap <F9> za
+nnoremap <CR> za
 
 " scrolling through the popup menu with Alt-j/k
 inoremap <expr> <Tab>     pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -174,7 +170,42 @@ inoremap <expr> <S-Tab>   pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " sourcing vimrc
 map <leader>s :source ~/.vimrc<CR>
 
-xnoremap <Tab> >
-xnoremap <S-Tab> <
+" tab section of code
+" xnoremap <Tab> >
+" xnoremap <S-Tab> <
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+" vim-commentary
+"function! UnmapCommentary()
+"  unmap gc
+"  nunmap gcc
+"  nunmap cgc
+"  nunmap gcu
+"endfunction
+" function UnmapCommentary()
+"   unmap gc
+"   nunmap gcc
+" "  nunmap cgc
+" "  nunmap gcu
+" endfunction
+
+"autocmd VimEnter * call UnmapCommentary()
+
+" xmap <leader>c  <Plug>Commentary
+" nmap <leader>c  <Plug>Commentary
+" omap <leader>c  <Plug>Commentary
+" nmap <leader>cc <Plug>CommentaryLine
+" nmap l<leader>c <Plug>ChangeCommentary
+" nmap <leader>cu <Plug>Commentary<Plug>Commentary
+
+" augroup bepo_clash
+"   autocmd!
+"   autocmd VimEnter * call UnmapCommentary()
+" augroup END
+
+nmap <leader>c <Plug>Commentary
+xmap <leader>c <Plug>Commentary
+omap <leader>c <Plug>Commentary
+nmap <leader>cc <Plug>CommentaryLine
 
 " }}}

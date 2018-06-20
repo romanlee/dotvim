@@ -135,17 +135,17 @@ vnoremap <C-h> <Home>
 vnoremap <C-l> <End>
 
 " windows and buffers and stuff
-nnoremap <leader>Q  :quit<cr>
+" nnoremap <leader>Q  :qa<cr>
 nnoremap <leader>q  :bp\|bd # <cr>
 nnoremap <leader>w  :w<cr>
+nnoremap <leader>W  :wa<cr>
 nnoremap <leader>wq :wq<cr>
 " move between tabs
 nnoremap <S-Tab>    :bp<cr>
 nnoremap <Tab>      :bn<cr>
 " move between split panes
-nnoremap <S-[>      <C-W>h
-nnoremap <S-]>      <C-W>l
-nnoremap <Esc>      <Nop>
+nnoremap <S-h>      <C-W>h
+nnoremap <S-l>      <C-W>l
 
 " FZF
 nnoremap <leader>t :Tags<cr>

@@ -45,6 +45,8 @@ call plug#end()
 
 " Airline ----------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
+  " to boost performance:
+let g:airline#extensions#whitespace#enabled=0
 
 " Deoplete ---------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
@@ -77,6 +79,7 @@ set mouse=a
 set clipboard=unnamed
 set cursorline
 set guicursor+=a:blinkon1
+set lazyredraw                    " improves performance when scrolling (?)
 
 " Searching
 set hlsearch        " highlight found words in search
@@ -135,7 +138,6 @@ vnoremap <C-h> <Home>
 vnoremap <C-l> <End>
 
 " windows and buffers and stuff
-" nnoremap <leader>Q  :qa<cr>
 nnoremap <leader>q  :bp\|bd # <cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>W  :wa<cr>

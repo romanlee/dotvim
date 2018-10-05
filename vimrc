@@ -22,7 +22,10 @@ if has('nvim')
     "Plug 'roxma/nvim-completion-manager'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
-Plug 'vim-airline/vim-airline'
+
+" statusline/tabline plugins
+Plug 'itchyny/lightline.vim'
+" Plug 'vim-airline/vim-airline'
 
 " tags
 Plug 'ludovicchabant/vim-gutentags'      " much better than vim-easytags
@@ -44,9 +47,21 @@ call plug#end()
 " PLUGIN CONFIG {{{
 
 " Airline ----------------------------------------------------------------------
-let g:airline#extensions#tabline#enabled = 1
-  " to boost performance:
-let g:airline#extensions#whitespace#enabled=0
+" let g:airline#extensions#tabline#enabled = 1
+"   " to boost performance:
+" let g:airline#extensions#whitespace#enabled=0
+
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 " Deoplete ---------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
@@ -79,7 +94,7 @@ set mouse=a
 set clipboard=unnamed
 set cursorline
 set guicursor+=a:blinkon1
-set lazyredraw                    " improves performance when scrolling (?)
+" set lazyredraw                    " improves performance when scrolling (?)
 
 " Searching
 set hlsearch        " highlight found words in search

@@ -94,6 +94,7 @@ set mouse=a
 set clipboard=unnamed
 set cursorline
 set guicursor+=a:blinkon1
+set autoread                      " When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
 " set lazyredraw                    " improves performance when scrolling (?)
 
 " Searching

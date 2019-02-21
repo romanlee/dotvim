@@ -28,7 +28,8 @@ Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'
 
 " tags
-Plug 'ludovicchabant/vim-gutentags'      " much better than vim-easytags
+" much better than vim-easytags
+Plug 'ludovicchabant/vim-gutentags'
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -89,7 +90,7 @@ set number
 set hidden
 set history=100
 set backspace=indent,eol,start
-set colorcolumn=80
+set colorcolumn=90
 set mouse=a
 set clipboard=unnamed
 set cursorline

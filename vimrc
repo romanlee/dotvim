@@ -18,9 +18,13 @@ Plug 'xolox/vim-misc'
 " Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'yuttie/comfortable-motion.vim'
+
 if has('nvim')
-    "Plug 'roxma/nvim-completion-manager'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " statusline/tabline plugins
@@ -118,8 +122,8 @@ set shiftwidth=2    " number of spaces to use for indent
 set expandtab       " tabs are spaces
 set autoindent      " automatically ident
 
-" Reomve white space upon save
-autocmd BufWritePre * :%s/\s\+$//e
+" " Reomve white space upon save
+" autocmd BufWritePre * :%s/\s\+$//e
 
 " using system clipboard on mac
 set clipboard+=unnamedplus

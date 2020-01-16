@@ -32,7 +32,11 @@ Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'
 
 " tags
-" much better than vim-easytags
+" requirements:
+"   - some non-default version of ctags, like exuberant-ctags
+"   - then, make sure exuberant-ctags is including all file types (.f03 for
+"   example has to be added manually by adding --langmap=fortran:+.f03 to
+"   $HOME/.ctags)
 Plug 'ludovicchabant/vim-gutentags'
 
 " git
@@ -40,8 +44,13 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " searching
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" requirements:
+" :Ag command requires external ag guy? - like ag silver searcher homebrew
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+
 Plug 'mileszs/ack.vim'
 " Plug 'rking/ag.vim'
 
